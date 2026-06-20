@@ -7,19 +7,33 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function usePwaInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    const handler = (e: Event) => {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isIOSInstalled = (window.navigator as any).standalone === true;
+
+    if (isStandalone || isIOSInstalled) {
+      setIsInstalled(true);
+      return;
+    }
+
+    const installHandler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setIsInstallable(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handler);
+    const appInstalledHandler = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', installHandler);
+    window.addEventListener('appinstalled', appInstalledHandler);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
+      window.removeEventListener('beforeinstallprompt', installHandler);
+      window.removeEventListener('appinstalled', appInstalledHandler);
     };
   }, []);
 
@@ -31,11 +45,10 @@ export function usePwaInstall() {
 
     if (outcome === 'accepted') {
       setDeferredPrompt(null);
-      setIsInstallable(false);
       return true;
     }
     return false;
   };
 
-  return { isInstallable, install };
+  return { isInstallable: !isInstalled && !!deferredPrompt, install };
 }
