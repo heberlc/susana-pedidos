@@ -17,7 +17,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <p className="text-sm font-semibold text-sky-700 uppercase tracking-wide">
           Código: {product.supplierCode}
         </p>
-        <h3 className="text-lg font-bold text-gray-900 line-clamp-2 min-h-[3.5rem] leading-tight">
+        <h3 className="text-lg font-bold text-gray-900 leading-tight">
           {product.name}
         </h3>
         <div className="flex items-baseline gap-2">
