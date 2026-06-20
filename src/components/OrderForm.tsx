@@ -38,9 +38,9 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onBack }) => {
 
   if (cart.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
-        <p className="text-lg">No hay productos en el pedido</p>
-        <Button onClick={onBack} className="mt-4" variant="secondary">
+      <div className="text-center py-16 text-gray-600">
+        <p className="text-2xl font-bold mb-4">No hay productos en el pedido</p>
+        <Button onClick={onBack} className="mt-4" variant="secondary" size="lg">
           Volver al catálogo
         </Button>
       </div>
@@ -50,47 +50,49 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onBack }) => {
   return (
     <div className="max-w-lg mx-auto space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-1">Resumen del pedido</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">Resumen del pedido</h2>
+        <p className="text-lg text-gray-600">
           {totalBoxes} cajas - {cart.length} productos diferentes
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-200">
+      <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-sm divide-y-2 divide-gray-200">
         {cart.map((item) => (
-          <div key={item.productId} className="flex items-center justify-between p-4">
+          <div key={item.productId} className="flex items-center justify-between p-5">
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+              <p className="text-lg font-semibold text-gray-900 truncate">
                 {item.product.name}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-base text-gray-600">
                 {item.quantity} cajas x {formatCurrency(item.product.packPrice)}
               </p>
             </div>
-            <span className="text-sm font-semibold text-sky-600 ml-4">
+            <span className="text-lg font-bold text-sky-700 ml-4">
               {formatCurrency(item.product.packPrice * item.quantity)}
             </span>
           </div>
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-lg font-bold">Total</span>
-          <span className="text-xl font-bold text-sky-600">
+      <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-sm p-5">
+        <div className="flex items-center justify-between mb-5">
+          <span className="text-2xl font-bold text-gray-900">Total</span>
+          <span className="text-3xl font-bold text-sky-700">
             {formatCurrency(subtotal)}
           </span>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nombre del cliente
+            <label htmlFor="customer-name" className="block text-lg font-semibold text-gray-800 mb-2">
+              Tu nombre
             </label>
             <input
+              id="customer-name"
               {...register('customerName', { required: true })}
-              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+              className="w-full px-4 py-4 bg-white border-2 border-gray-300 rounded-xl text-lg focus:outline-none focus:ring-4 focus:ring-sky-300 focus:border-sky-600 placeholder:text-gray-400"
               placeholder="Ej: Susana"
+              autoComplete="name"
             />
           </div>
         </form>
@@ -98,11 +100,11 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onBack }) => {
 
       <WhatsAppButton />
 
-      <div className="flex gap-3">
-        <Button onClick={onBack} variant="secondary" className="flex-1">
+      <div className="flex gap-4">
+        <Button onClick={onBack} variant="secondary" className="flex-1" size="lg">
           Volver
         </Button>
-        <Button onClick={handleNewOrder} variant="ghost" className="flex-1">
+        <Button onClick={handleNewOrder} variant="ghost" className="flex-1" size="lg">
           Nuevo pedido
         </Button>
       </div>

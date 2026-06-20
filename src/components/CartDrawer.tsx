@@ -25,67 +25,80 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, onCheckou
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+        className="fixed inset-0 bg-black/60 z-50 transition-opacity"
         onClick={onClose}
+        aria-hidden="true"
       />
-      <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white z-50 shadow-xl flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-sky-500" />
-            <h2 className="text-lg font-semibold">Mi Pedido</h2>
+      <aside 
+        className="fixed inset-y-0 right-0 w-full max-w-md bg-white z-50 shadow-2xl flex flex-col"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Carrito de compras"
+      >
+        <div className="flex items-center justify-between p-5 border-b-2 border-gray-200">
+          <div className="flex items-center gap-3">
+            <ShoppingBag className="w-7 h-7 text-sky-600" aria-hidden="true" />
+            <h2 className="text-2xl font-bold text-gray-900">Mi Pedido</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+            className="p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl min-h-14 min-w-14 flex items-center justify-center"
+            aria-label="Cerrar carrito"
           >
-            <X className="w-5 h-5" />
+            <X className="w-7 h-7" aria-hidden="true" />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-5">
           {cart.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <ShoppingBag className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-lg">Tu carrito está vacío</p>
-              <p className="text-sm mt-1">Agrega productos del catálogo</p>
+            <div className="text-center py-16 text-gray-500">
+              <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-gray-300" aria-hidden="true" />
+              <p className="text-2xl font-bold mb-2">Tu carrito está vacío</p>
+              <p className="text-lg">Agrega productos del catálogo</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {cart.map((item) => (
                 <div
                   key={item.productId}
-                  className="bg-gray-50 rounded-lg p-3 space-y-2"
+                  className="bg-gray-50 rounded-2xl p-4 space-y-3"
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-medium text-gray-900 line-clamp-2 flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-lg font-semibold text-gray-900 line-clamp-2 flex-1">
                       {item.product.name}
                     </p>
                     <button
                       onClick={() => removeItem(item.productId)}
-                      className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                      className="p-3 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors min-h-12 min-w-12 flex items-center justify-center"
+                      aria-label={`Eliminar ${item.product.name} del carrito`}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-5 h-5" aria-hidden="true" />
                     </button>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       <button
                         onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="p-1 bg-white border border-gray-300 rounded-md hover:bg-gray-100"
+                        className="p-3 bg-white border-2 border-gray-300 rounded-xl hover:bg-gray-100 min-h-12 min-w-12 flex items-center justify-center"
+                        aria-label={`Reducir cantidad de ${item.product.name}`}
                       >
-                        <Minus className="w-4 h-4" />
+                        <Minus className="w-5 h-5" aria-hidden="true" />
                       </button>
-                      <span className="w-8 text-center text-sm font-medium">
+                      <span 
+                        className="w-12 text-center text-xl font-bold"
+                        aria-label={`${item.quantity} cajas`}
+                      >
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="p-1 bg-white border border-gray-300 rounded-md hover:bg-gray-100"
+                        className="p-3 bg-white border-2 border-gray-300 rounded-xl hover:bg-gray-100 min-h-12 min-w-12 flex items-center justify-center"
+                        aria-label={`Aumentar cantidad de ${item.product.name}`}
                       >
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-5 h-5" aria-hidden="true" />
                       </button>
                     </div>
-                    <span className="text-sm font-semibold text-sky-600">
+                    <span className="text-xl font-bold text-sky-700">
                       {formatCurrency(item.product.packPrice * item.quantity)}
                     </span>
                   </div>
@@ -96,19 +109,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, onCheckou
         </div>
 
         {cart.length > 0 && (
-          <div className="border-t border-gray-200 p-4 space-y-3">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>{totalBoxes} cajas</span>
+          <div className="border-t-2 border-gray-200 p-5 space-y-4 bg-gray-50">
+            <div className="flex items-center justify-between text-lg text-gray-700">
+              <span className="font-semibold">{totalBoxes} cajas en total</span>
               <button
                 onClick={clearCart}
-                className="text-red-500 hover:text-red-600 text-sm"
+                className="text-red-600 hover:text-red-700 font-semibold text-lg p-2 min-h-11 flex items-center"
+                aria-label="Limpiar todo el carrito"
               >
                 Limpiar todo
               </button>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-bold">Total</span>
-              <span className="text-lg font-bold text-sky-600">
+              <span className="text-2xl font-bold text-gray-900">Total</span>
+              <span className="text-2xl font-bold text-sky-700">
                 {formatCurrency(subtotal)}
               </span>
             </div>
@@ -117,7 +131,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, onCheckou
             </Button>
           </div>
         )}
-      </div>
+      </aside>
     </>
   );
 };

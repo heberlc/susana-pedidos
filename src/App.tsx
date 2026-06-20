@@ -30,9 +30,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-sky-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:text-lg focus:font-semibold"
+      >
+        Saltar al contenido principal
+      </a>
+      
       <Header onCartClick={() => setCartOpen(true)} />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 py-6" role="main">
         {view === 'catalogo' ? (
           <ProductList />
         ) : (

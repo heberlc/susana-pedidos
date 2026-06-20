@@ -9,10 +9,11 @@ export const WhatsAppButton: React.FC = () => {
     <Button
       onClick={sendOrder}
       disabled={!canSend}
-      className="w-full bg-green-500 hover:bg-green-600 text-white"
+      className="w-full bg-green-600 hover:bg-green-700 text-white shadow-lg"
       size="lg"
+      aria-label={canSend ? "Enviar pedido por WhatsApp" : "Agrega productos al carrito para enviar por WhatsApp"}
     >
-      <MessageCircle className="w-5 h-5" />
+      <MessageCircle className="w-6 h-6" aria-hidden="true" />
       Enviar pedido por WhatsApp
     </Button>
   );

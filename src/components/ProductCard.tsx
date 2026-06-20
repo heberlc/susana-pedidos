@@ -12,34 +12,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const addItem = useOrderStore((s) => s.addItem);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow">
-      <div className="space-y-2">
-        <p className="text-xs text-gray-500 uppercase tracking-wide">
-          {product.supplierCode}
+    <article className="bg-white rounded-2xl border-2 border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow">
+      <div className="space-y-3">
+        <p className="text-sm font-semibold text-sky-700 uppercase tracking-wide">
+          Código: {product.supplierCode}
         </p>
-        <h3 className="font-medium text-gray-900 line-clamp-2 min-h-[2.5rem]">
+        <h3 className="text-lg font-bold text-gray-900 line-clamp-2 min-h-[3.5rem] leading-tight">
           {product.name}
         </h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-sky-600">
+          <span className="text-2xl font-bold text-sky-700">
             {formatCurrency(product.packPrice)}
           </span>
-          <span className="text-sm text-gray-500">
-            / {product.unitsPerBox} uds
+          <span className="text-base text-gray-600 font-medium">
+            / {product.unitsPerBox} unidades
           </span>
         </div>
-        <p className="text-xs text-gray-500">
-          {formatCurrency(product.unitPrice)} c/u
+        <p className="text-base text-gray-600">
+          {formatCurrency(product.unitPrice)} por unidad
         </p>
       </div>
       <Button
         onClick={() => addItem(product)}
-        className="w-full mt-3"
-        size="sm"
+        className="w-full mt-4"
+        size="md"
+        aria-label={`Agregar ${product.name} al carrito`}
       >
-        <Plus className="w-4 h-4" />
-        Agregar
+        <Plus className="w-5 h-5" aria-hidden="true" />
+        Agregar al carrito
       </Button>
-    </div>
+    </article>
   );
 };
