@@ -1,4 +1,4 @@
-# Pedidos Susana
+# Pedidos Susana 2026
 
 Aplicación PWA para crear pedidos de productos y enviarlos por WhatsApp a proveedores.
 
