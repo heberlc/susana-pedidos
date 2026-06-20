@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0369a1"/>
+  <text x="256" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="white">Pedidos</text>
+  <text x="256" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="60" fill="white">Susana</text>
+  <circle cx="256" cy="400" r="40" fill="white" opacity="0.3"/>
+  <path d="M236 400 L252 416 L276 384" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
